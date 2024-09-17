@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        #formattedPayments {
+            white-space: pre-line;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center">Payment Calculator</h1>
+        <div class="form-group">
+            <label for="payments">Enter Payments:</label>
+            <textarea id="payments" class="form-control" rows="10" cols="50"></textarea>
+        </div>
+        <button class="btn btn-primary btn-block" onclick="calculateTotal()">Calculate Total</button>
+        <div class="mt-3">
+            <h3>Total Amount:</h3>
+            <p id="result" class="p-3 border bg-light"></p>
+        </div>
+        <div class="mt-3">
+            <h3>Formatted Payments:</h3>
+            <p id="formattedPayments" class="p-3 border bg-light"></p>
+        </div>
+       
+    </div>
+
+    <script>
+        function calculateTotal() {
+            // Get the text from the textarea
+            let paymentsText = document.getElementById('payments').value;
+            
+            // Remove all non-numeric characters except digits and '+'
+            paymentsText = paymentsText.replace(/[^0-9+]/g, ' ');
+            
+            // Split the text into individual parts
+            let parts = paymentsText.split(/[\s+]+/);
+            
+            // Filter out any empty strings
+            let numbers = parts.filter(part => part !== '');
+            
+            // Create a formatted string with each amount preceded by a '+'
+            let formattedPayments = numbers.map(num => '+' + num).join('\n');
+            
+            // Convert the strings to numbers and sum them up
+            let total = numbers.reduce((sum, num) => sum + parseInt(num), 0);
+            
+            // Display the formatted payments and total amount
+            document.getElementById('formattedPayments').innerText = formattedPayments;
+            document.getElementById('result').innerText = total;
+        }
+    </script>
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
